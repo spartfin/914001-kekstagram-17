@@ -75,3 +75,147 @@ var photo = function () {
 };
 
 containerPicture.appendChild(photo()); // добавляем сгенерированные блоки фотографий
+
+var uploadFile = document.querySelector('#upload-file'); // находим поле для загрузки фотографии
+var uploadCancel = document.querySelector('#upload-cancel'); // находим кнопку закрытия редактирования фотографии
+var imgUploadOverlay = document.querySelector('.img-upload__overlay'); // форма редактирования фотографии
+var ESC_KEYCODE = 27;
+
+// функция открытия попапа
+var openPopup = function () {
+  imgUploadOverlay.classList.remove('hidden');
+};
+
+// фунция закрытия попапа
+var closePopup = function () {
+  imgUploadOverlay.classList.add('hidden');
+};
+
+// зоказываем форму редактирования изображения
+uploadFile.addEventListener('click', function () {
+  openPopup();
+});
+
+// закрываем форму редактирования изображения
+uploadCancel.addEventListener('click', function () {
+  closePopup();
+});
+
+// закрываем форму редактирования изображения через Esc
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    imgUploadOverlay.classList.add('hidden');
+  }
+});
+
+// накладываем эффекты на изображение
+var effectNone = document.querySelector('#effect-none');
+var effectChrome = document.querySelector('#effect-chrome');
+var effectSepia = document.querySelector('#effect-sepia');
+var effectMarvin = document.querySelector('#effect-marvin');
+var effectPhobos = document.querySelector('#effect-phobos');
+var effectHeat = document.querySelector('#effect-heat');
+var imgUploadPreview = document.querySelector('.img-upload__preview'); // предварительный просмотр фотографии
+
+effectNone.addEventListener('click', function () {
+  imgUploadPreview.classList.remove();
+  imgUploadPreview.classList.add('effects__preview--none');
+});
+
+effectChrome.addEventListener('click', function () {
+  imgUploadPreview.classList.remove();
+  imgUploadPreview.classList.add('effects__preview--chrome');
+});
+
+effectSepia.addEventListener('click', function () {
+  imgUploadPreview.classList.remove();
+  imgUploadPreview.classList.add('effects__preview--sepia');
+});
+
+effectMarvin.addEventListener('click', function () {
+  imgUploadPreview.classList.remove();
+  imgUploadPreview.classList.add('effects__preview--marvin');
+});
+
+effectPhobos.addEventListener('click', function () {
+  imgUploadPreview.classList.remove();
+  imgUploadPreview.classList.add('effects__preview--phobos');
+});
+
+effectHeat.addEventListener('click', function () {
+  imgUploadPreview.classList.remove();
+  imgUploadPreview.classList.add('effects__preview--heat');
+});
+
+// Интенсивность эффекта
+var effectLevelValue = document.querySelector('.effect-level__value');
+var effectLevelLine = document.querySelector('.effect-level__line');
+var effectLevelPin = document.querySelector('.effect-level__pin');
+
+// тут что то совсем не получается, не пойму я как с этим ползунком
+var changeIntensityEffect = function () {
+  effectLevelValue.value = (effectLevelPin.offsetLeft / effectLevelLine.clientWidth).toFixed(1);
+
+  if (imgUploadPreview.classList[0] === 'effects__preview--chrome') {
+    imgUploadPreview.style.filter = 'grayscale(' + effectLevelValue.value + ')';
+  } else if (
+    imgUploadPreview.classList[0] === 'effects__preview--sepia') {
+    imgUploadPreview.style.filter = 'sepia(' + effectLevelValue.value + ')';
+  } else if (
+    imgUploadPreview.classList[0] === 'effects__preview--marvin') {
+    imgUploadPreview.style.filter = 'invert(' + effectLevelValue.value * 100 + '%)';
+  } else if (
+    imgUploadPreview.classList[0] === 'effects__preview--phobos') {
+    imgUploadPreview.style.filter = 'blur(' + effectLevelValue.value * 3 + 'px)';
+  } else if (
+    imgUploadPreview.classList[0] === 'effects__preview--heat') {
+    imgUploadPreview.style.filter = 'brightness(' + effectLevelValue.value * 3 + ')';
+  }
+};
+
+effectLevelPin.addEventListener('mouseup', function () {
+  changeIntensityEffect();
+});
+
+// изменяем масштаба
+var MIN_SCALE = 0; // минимальное значение масштаба
+var MAX_SCALE = 100; // максимальное значение масштаба
+var STEP_SCALE = 25; // шаг мвсштаба
+var scaleCntrolValue = document.querySelector('.scale__control--value'); // само значение
+var scaleControlSmaller = document.querySelector('.scale__control--smaller'); // кнопка уменьшения размера
+var scaleControlBigger = document.querySelector('.scale__control--bigger'); // кнопка увеличение размера
+
+// функция уменьшения размера
+var outZoom = function () {
+  var scaleSmaller = parseInt(scaleCntrolValue.value, 10) - STEP_SCALE;
+
+  if (scaleSmaller <= MIN_SCALE) {
+    scaleSmaller = MIN_SCALE;
+  }
+  scaleCntrolValue.value = scaleSmaller + '%';
+
+  imgUploadPreview.style.transform =
+    'scale(' + scaleSmaller / 100 + ')';
+};
+
+// функция увеличение размера
+var inZoom = function () {
+  var scaleBigger = parseInt(scaleCntrolValue.value, 10) + STEP_SCALE;
+
+  if (scaleBigger >= MAX_SCALE) {
+    scaleBigger = MAX_SCALE;
+  }
+  scaleCntrolValue.value = scaleBigger + '%';
+
+  imgUploadPreview.style.transform =
+    'scale(' + scaleBigger / 100 + ')';
+};
+
+scaleControlSmaller.addEventListener('click', function () {
+  outZoom();
+});
+
+scaleControlBigger.addEventListener('click', function () {
+  inZoom();
+});
+
