@@ -76,22 +76,37 @@ var photo = function () {
 
 containerPicture.appendChild(photo()); // добавляем сгенерированные блоки фотографий
 
-var uploadFile = document.querySelector('#upload-file'); // находим поле для загрузки фотографии
-var uploadCancel = document.querySelector('#upload-cancel'); // находим кнопку закрытия редактирования фотографии
-var imgUploadOverlay = document.querySelector('.img-upload__overlay'); // форма редактирования фотографии
+var imgUploadOverlay = containerPicture.querySelector('.img-upload__overlay'); // форма редактирования фотографии
+var uploadFile = containerPicture.querySelector('#upload-file'); // находим поле для загрузки фотографии
+var uploadCancel = containerPicture.querySelector('#upload-cancel'); // находим кнопку закрытия редактирования фотографии
+var textDescription = containerPicture.querySelector('.text__description'); // находим поле ввода комментария
 var ESC_KEYCODE = 27;
+
+// функция не даёт закрыть полее ввода комментария если оно в фокусе
+var onPopupEscPress = function (evt) {
+  if (textDescription === document.activeElement) {
+    return evt;
+  } else {
+    if (evt.keyCode === ESC_KEYCODE) {
+      closePopup();
+    }
+  }
+  return evt;
+};
 
 // функция открытия попапа
 var openPopup = function () {
   imgUploadOverlay.classList.remove('hidden');
+  containerPicture.addEventListener('keydown', onPopupEscPress);
 };
 
 // фунция закрытия попапа
 var closePopup = function () {
   imgUploadOverlay.classList.add('hidden');
+  containerPicture.removeEventListener('keydown', onPopupEscPress);
 };
 
-// зоказываем форму редактирования изображения
+// открываем форму редактирования изображения
 uploadFile.addEventListener('click', function () {
   openPopup();
 });
@@ -101,21 +116,14 @@ uploadCancel.addEventListener('click', function () {
   closePopup();
 });
 
-// закрываем форму редактирования изображения через Esc
-document.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
-    imgUploadOverlay.classList.add('hidden');
-  }
-});
-
 // накладываем эффекты на изображение
-var effectNone = document.querySelector('#effect-none');
-var effectChrome = document.querySelector('#effect-chrome');
-var effectSepia = document.querySelector('#effect-sepia');
-var effectMarvin = document.querySelector('#effect-marvin');
-var effectPhobos = document.querySelector('#effect-phobos');
-var effectHeat = document.querySelector('#effect-heat');
-var imgUploadPreview = document.querySelector('.img-upload__preview'); // предварительный просмотр фотографии
+var effectNone = imgUploadOverlay.querySelector('#effect-none');
+var effectChrome = imgUploadOverlay.querySelector('#effect-chrome');
+var effectSepia = imgUploadOverlay.querySelector('#effect-sepia');
+var effectMarvin = imgUploadOverlay.querySelector('#effect-marvin');
+var effectPhobos = imgUploadOverlay.querySelector('#effect-phobos');
+var effectHeat = imgUploadOverlay.querySelector('#effect-heat');
+var imgUploadPreview = imgUploadOverlay.querySelector('.img-upload__preview'); // предварительный просмотр фотографии
 
 effectNone.addEventListener('click', function () {
   imgUploadPreview.classList.remove();
@@ -148,11 +156,11 @@ effectHeat.addEventListener('click', function () {
 });
 
 // Интенсивность эффекта
-var effectLevelValue = document.querySelector('.effect-level__value');
-var effectLevelLine = document.querySelector('.effect-level__line');
-var effectLevelPin = document.querySelector('.effect-level__pin');
+var effectLevelValue = imgUploadOverlay.querySelector('.effect-level__value');
+var effectLevelLine = imgUploadOverlay.querySelector('.effect-level__line');
+var effectLevelPin = imgUploadOverlay.querySelector('.effect-level__pin');
 
-// тут что то совсем не получается, не пойму я как с этим ползунком
+// функция интенсивности эффекта
 var changeIntensityEffect = function () {
   effectLevelValue.value = (effectLevelPin.offsetLeft / effectLevelLine.clientWidth).toFixed(1);
 
@@ -180,10 +188,10 @@ effectLevelPin.addEventListener('mouseup', function () {
 // изменяем масштаба
 var MIN_SCALE = 0; // минимальное значение масштаба
 var MAX_SCALE = 100; // максимальное значение масштаба
-var STEP_SCALE = 25; // шаг мвсштаба
-var scaleCntrolValue = document.querySelector('.scale__control--value'); // само значение
-var scaleControlSmaller = document.querySelector('.scale__control--smaller'); // кнопка уменьшения размера
-var scaleControlBigger = document.querySelector('.scale__control--bigger'); // кнопка увеличение размера
+var STEP_SCALE = 25; // шаг масштаба
+var scaleCntrolValue = imgUploadOverlay.querySelector('.scale__control--value'); // само значение
+var scaleControlSmaller = imgUploadOverlay.querySelector('.scale__control--smaller'); // кнопка уменьшения размера
+var scaleControlBigger = imgUploadOverlay.querySelector('.scale__control--bigger'); // кнопка увеличение размера
 
 // функция уменьшения размера
 var outZoom = function () {
@@ -218,4 +226,3 @@ scaleControlSmaller.addEventListener('click', function () {
 scaleControlBigger.addEventListener('click', function () {
   inZoom();
 });
-
