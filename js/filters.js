@@ -9,42 +9,33 @@
 
   imgFilters.classList.remove('img-filters--inactive');
 
-  // Популярные — фотографии в изначальном порядке;
-  var renderPopularPhotos = function (arr) {
-    var newArr = arr;
-
-    return newArr;
-  };
-
   // Новые — 10 случайных, не повторяющихся фотографий;
   var renderNewPhotos = function (arr) {
-    var newUsersPhotos = arr
-    .slice()
-    .sort(window.utils.compareRandom)
-    .slice(0, PHOTOS_COUNT);
-
-    return newUsersPhotos;
+    var copyArray = arr.slice();
+    var sortedArray = copyArray.sort(window.utils.compareRandom);
+    var cutedArray = sortedArray.slice(0, PHOTOS_COUNT);
+    return cutedArray;
   };
 
   // Обсуждаемые — фотографии, отсортированные в порядке убывания количества комментариев
+  var sortComments = function (left, right) {
+    var equalValue = window.utils.compareNumbers(left.comments.length, right.comments.length);
+
+    if (left.comments.length === right.comments.length) {
+      equalValue = window.utils.compareNumbers(left.likes, right.likes);
+    }
+    return equalValue;
+  };
+
   var renderCommitPhotos = function (arr) {
-    var commitUsersPhotos = arr
-    .slice()
-    .sort(function (left, right) {
-      var sort = window.utils.compareNumbers(left.comments.length, right.comments.length);
-
-      if (left.comments.length === right.comments.length) {
-        sort = window.utils.compareNumbers(left.likes, right.likes);
-      }
-      return sort;
-    });
-
-    return commitUsersPhotos;
+    var copyArray = arr.slice();
+    var sortedArray = copyArray.sort(sortComments);
+    return sortedArray;
   };
 
   filterPopular.addEventListener('click', function () {
     window.removeAllPhoto();
-    window.containerPicture.appendChild(window.initPhoto(renderPopularPhotos(window.photoArr)));
+    window.containerPicture.appendChild(window.initPhoto(window.photoArr));
     filterPopular.classList.add('img-filters__button--active');
     filterNew.classList.remove('img-filters__button--active');
     filterDiscussed.classList.remove('img-filters__button--active');
