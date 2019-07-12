@@ -19,6 +19,7 @@
   var successHandler = function (content) {
     window.photoArr = content;
     window.containerPicture.appendChild(initPhoto(window.photoArr));
+    window.bigPicture.appendChild(window.createBigPicture(window.photoArr));
   };
   window.successHandler = successHandler;
 
