@@ -9,6 +9,7 @@
   var uploadCancel = containerPicture.querySelector('#upload-cancel'); // находим кнопку закрытия редактирования фотографии
   var textDescription = containerPicture.querySelector('.text__description'); // находим поле ввода комментария
   var ESC_KEYCODE = 27;
+  window.ESC_KEYCODE = ESC_KEYCODE;
 
   // функция не даёт закрыть полее ввода комментария если оно в фокусе
   var onPopupEscPress = function (evt) {
