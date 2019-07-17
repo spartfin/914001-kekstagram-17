@@ -8,8 +8,13 @@
     for (var i = 0; i < arr.length; i++) {
       var photoElement = picture.cloneNode(true);
       photoElement.querySelector('.picture__img').src = arr[i].url;
+      photoElement.querySelector('.picture__img').dataset.id = i; // присваиваем id картинке
       photoElement.querySelector('.picture__likes').textContent = arr[i].likes;
       photoElement.querySelector('.picture__comments').textContent = arr[i].comments.length;
+      photoElement.addEventListener('click', function (evt) {
+        evt.preventDefault(); // oтменяет событие
+        window.showBigPictureImg(evt.target.src, evt.target.alt);
+      });
       fragment.appendChild(photoElement);
     }
     return fragment;

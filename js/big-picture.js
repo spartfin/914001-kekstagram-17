@@ -8,8 +8,7 @@
   var commentsCount = bigPicture.querySelector('.comments-count'); // количество комментариев
   var socialComment = bigPicture.querySelectorAll('.social__comment'); // список комментариев под фотографией
   var socialCaption = bigPicture.querySelector('.social__caption'); // описание фотографии
-
-  bigPicture.classList.remove('hidden'); // показываем полноэкранный показ изображения
+  var pictureCancel = bigPicture.querySelector('#picture-cancel');
 
   // заполняем его данными из первого элемента массива
   var createBigPicture = function (arr) {
@@ -24,8 +23,32 @@
     bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden'); // прячем блоки счётчика комментариев
     bigPicture.querySelector('.comments-loader').classList.add('visually-hidden'); // прячем блоки загрузки новых комментариев
   };
-
   window.createBigPicture = createBigPicture;
+
+  // функция показа полноразмерного режима
+  var showBigPictureImg = function (src, alt) {
+    bigPicture.classList.remove('hidden');
+    bigPicture.querySelector('.big-picture__img img').src = src;
+    bigPicture.querySelector('.big-picture__img img').alt = alt;
+  };
+  window.showBigPictureImg = showBigPictureImg;
+
+  // функция закрытия полноразмерного режима
+  var closeBigPicture = function () {
+    bigPicture.classList.add('hidden');
+  };
+
+  // закрываем по клику полноразмерный режим
+  pictureCancel.addEventListener('click', function () {
+    closeBigPicture();
+  });
+
+  // закрываем по кнопке ESC полноразмерный режим
+  window.containerPicture.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === window.ESC_KEYCODE) {
+      closeBigPicture();
+    }
+  });
 
 })();
 
