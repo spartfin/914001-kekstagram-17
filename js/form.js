@@ -6,8 +6,10 @@
   var imgUploadOverlay = containerPicture.querySelector('.img-upload__overlay'); // форма редактирования фотографии
   window.imgUploadOverlay = imgUploadOverlay;
   var uploadFile = containerPicture.querySelector('#upload-file'); // находим поле для загрузки фотографии
+  window.uploadFile = uploadFile;
   var uploadCancel = containerPicture.querySelector('#upload-cancel'); // находим кнопку закрытия редактирования фотографии
   var textDescription = containerPicture.querySelector('.text__description'); // находим поле ввода комментария
+  window.textDescription = textDescription;
   var ESC_KEYCODE = 27;
   window.ESC_KEYCODE = ESC_KEYCODE;
 
@@ -34,6 +36,7 @@
     imgUploadOverlay.classList.add('hidden');
     window.containerPicture.removeEventListener('keydown', onPopupEscPress);
   };
+  window.closePopup = closePopup;
 
   // открываем форму редактирования изображения
   uploadFile.addEventListener('click', function () {

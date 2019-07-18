@@ -7,6 +7,7 @@
   var textHashtags = document.querySelector('.text__hashtags'); // находим поле для добавления хэштегов
   window.textHashtags = textHashtags;
   var imgUploadForm = document.querySelector('.img-upload__form'); // поле для загрузки нового изображения на сайт
+  window. imgUploadForm = imgUploadForm;
 
   var hashtagsValidate = function () {
     var hashtagsArray = textHashtags.value.split(' '); // разбиваем строку в массив
