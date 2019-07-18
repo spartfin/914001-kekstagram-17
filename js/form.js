@@ -13,7 +13,7 @@
 
   // функция не даёт закрыть полее ввода комментария если оно в фокусе
   var onPopupEscPress = function (evt) {
-    if (textDescription === document.activeElement) {
+    if (textDescription === document.activeElement || window.textHashtags === document.activeElement) {
       return evt;
     } else {
       if (evt.keyCode === ESC_KEYCODE) {
