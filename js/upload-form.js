@@ -25,7 +25,6 @@
   // cбрасывает введённые ранее данные
   var resetUpload = function () {
     window.textHashtags.value = '';
-    window.textHashtags.style.outline = 'none';
     window.textDescription.value = '';
     window.uploadFile.value = '';
   };
