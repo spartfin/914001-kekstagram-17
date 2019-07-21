@@ -11,11 +11,7 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
-        onSuccess();
-      } else {
-        onError();
-      }
+      onSuccess(xhr.response);
     });
 
     xhr.addEventListener('error', function () {
@@ -91,8 +87,9 @@
   };
 
   // Отправка формы нажатием на кнопку
-  window.imgUploadForm.addEventListener('submit', function () {
+  window.imgUploadForm.addEventListener('submit', function (evt) {
     upload(new FormData(window.imgUploadForm), onSucces);
+    evt.preventDefault();
   });
 
 })();
