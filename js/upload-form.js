@@ -87,8 +87,12 @@
 
   // Отправка формы нажатием на кнопку
   window.imgUploadForm.addEventListener('submit', function (evt) {
-    upload(new FormData(window.imgUploadForm), onSucces);
     evt.preventDefault();
+    var submitResult = window.submitValidate();
+    if (!submitResult) {
+      var newFormData = new FormData(window.imgUploadForm);
+      upload(newFormData, onSucces);
+    }
   });
 
 })();

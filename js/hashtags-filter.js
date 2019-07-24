@@ -7,10 +7,11 @@
   var textHashtags = document.querySelector('.text__hashtags'); // находим поле для добавления хэштегов
   window.textHashtags = textHashtags;
   var imgUploadForm = document.querySelector('.img-upload__form'); // поле для загрузки нового изображения на сайт
-  window. imgUploadForm = imgUploadForm;
+  window.imgUploadForm = imgUploadForm;
 
-  var hashtagsValidate = function () {
-    var hashtagsArray = textHashtags.value.split(' ').filter(Boolean); // разбиваем строку в массив
+  var hashtagsValidate = function (textHashtagsValue) {
+    var hashtagsArray = textHashtagsValue.split(' '); // разбиваем строку в массив
+
     textHashtags.addEventListener('input', function () {
       textHashtags.setCustomValidity(''); // строка ошибки
       window.textHashtags.style.outline = 'none';
@@ -29,22 +30,21 @@
         return 'Хэштег не может содержать больше ' + MAX_HASHTAG_SIZE + ' символов';
       }
     }
-    return '';
-  };
-
-  // функция в случаи ошибки
-  var hashtagsError = function (errorMessage, entryField) {
-    if (errorMessage) {
-      entryField.style.outline = '4px solid red'; // рамка в случаи ошибки
-      entryField.setCustomValidity(errorMessage); // выводим сообщение ошибки
-    }
+    return false;
   };
 
   // функция валидации при отправке хэштега
   var submitValidate = function () {
-    hashtagsError(hashtagsValidate(), textHashtags);
+    // строа хештегов из поля с шехтегами
+    var textHashtagsValue = textHashtags.value;
+    var errorMessage = hashtagsValidate(textHashtagsValue);
+    if (errorMessage) {
+      textHashtags.style.outline = '4px solid red'; // рамка в случаи ошибки
+      textHashtags.setCustomValidity(errorMessage); // выводим сообщение ошибки
+      return true;
+    }
+    return false;
   };
 
-  imgUploadForm.addEventListener('submit', submitValidate());
-
+  window.submitValidate = submitValidate;
 })();

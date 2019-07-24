@@ -10,7 +10,11 @@
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-        onSuccess(xhr.response);
+        var responseArray = xhr.response.slice();
+        for (var i = 0; i < responseArray.length; i++) {
+          responseArray[i].id = i;
+        }
+        onSuccess(responseArray);
       } else {
         onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }

@@ -9,12 +9,17 @@
     compareNumbers: function (left, right) {
       if (left > right) {
         return -1;
-      } else if (left < right) {
+      } if (left < right) {
         return 1;
-      } else {
-        return 0;
       }
-    }
+      return 0;
+    },
+
+    getRandomValue: function (min, max) {
+      var rand = min + Math.random() * (max + 1 - min);
+
+      return Math.floor(rand);
+    },
   };
 
 })();

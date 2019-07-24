@@ -7,13 +7,15 @@
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < arr.length; i++) {
       var photoElement = picture.cloneNode(true);
+      photoElement.dataset.id = arr[i].id;
       photoElement.querySelector('.picture__img').src = arr[i].url;
-      photoElement.querySelector('.picture__img').dataset.id = i; // присваиваем id картинке
       photoElement.querySelector('.picture__likes').textContent = arr[i].likes;
       photoElement.querySelector('.picture__comments').textContent = arr[i].comments.length;
       photoElement.addEventListener('click', function (evt) {
-        evt.preventDefault(); // oтменяет событие
-        window.showBigPictureImg(evt.target.src, evt.target.alt);
+        evt.preventDefault();
+        var uniqId = evt.currentTarget.dataset.id;
+        var currentPictureObj = window.photoArr[uniqId];
+        window.showBigPictureImg(currentPictureObj);
       });
       fragment.appendChild(photoElement);
     }
@@ -23,8 +25,8 @@
 
   var successHandler = function (content) {
     window.photoArr = content;
-    window.containerPicture.appendChild(initPhoto(window.photoArr));
-    window.bigPicture.appendChild(window.createBigPicture(window.photoArr));
+    var initialPhoto = initPhoto(window.photoArr);
+    window.containerPicture.appendChild(initialPhoto);
   };
   window.successHandler = successHandler;
 
