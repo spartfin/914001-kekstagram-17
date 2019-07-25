@@ -14,7 +14,7 @@
 
     textHashtags.addEventListener('input', function () {
       textHashtags.setCustomValidity(''); // строка ошибки
-      window.textHashtags.style.outline = 'none';
+      textHashtags.style.outline = 'none';
     });
     if (hashtagsArray.length > MAX_HASHTAGS_LENGTH) {
       return 'Нельзя внести больше ' + MAX_HASHTAGS_LENGTH + ' тегов';
@@ -28,6 +28,12 @@
         return 'Хэштег должен начинаться с символа #';
       } else if (hashtagsArray[i].length > MAX_HASHTAG_SIZE) {
         return 'Хэштег не может содержать больше ' + MAX_HASHTAG_SIZE + ' символов';
+      } else if (hashtagsArray.indexOf(hashtagsArray[i]) !== i) {
+        return 'Один и тот же хэш-тег не может быть использован дважды';
+      } else if (hashtagsArray.length > 5) {
+        return 'Нельзя указать больше пяти хэш-тегов';
+      } else if (hashtagsArray[i].indexOf('#', 1) >= 1) {
+        return 'Хэш-теги разделяются пробелами';
       }
     }
     return false;
@@ -35,7 +41,6 @@
 
   // функция валидации при отправке хэштега
   var submitValidate = function () {
-    // строа хештегов из поля с шехтегами
     var textHashtagsValue = textHashtags.value;
     var errorMessage = hashtagsValidate(textHashtagsValue);
     if (errorMessage) {

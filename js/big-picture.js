@@ -1,12 +1,12 @@
 'use strict';
 
 (function () {
+  var COMMENTS_COUNT = 4;
   var bigPicture = document.querySelector('.big-picture');
-  var bigPictureSocial = document.querySelector('.big-picture__social');
+  var bigPictureSocial = bigPicture.querySelector('.big-picture__social');
   var pictureCancel = bigPicture.querySelector('#picture-cancel');
   var commentsLoader = bigPicture.querySelector('.comments-loader');
-  var COMMENTS_COUNT = 4;
-  var socialCommentCount = document.querySelector('.social__comment-count');
+  var socialCommentCount = bigPicture.querySelector('.social__comment-count');
 
   var commentsInfo = function () {
     commentsLoader.classList.add('visually-hidden');
