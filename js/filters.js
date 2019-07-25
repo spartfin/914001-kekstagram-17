@@ -35,7 +35,8 @@
 
   filterPopular.addEventListener('click', function () {
     window.removeAllPhoto();
-    window.containerPicture.appendChild(window.initPhoto(window.photoArr));
+    var initialPhoto = window.initPhoto(window.photoArr);
+    window.containerPicture.appendChild(initialPhoto);
     filterPopular.classList.add('img-filters__button--active');
     filterNew.classList.remove('img-filters__button--active');
     filterDiscussed.classList.remove('img-filters__button--active');
@@ -45,7 +46,9 @@
     window.removeAllPhoto();
     // Функция устранения "дребезга", в других вкладках не увидел смысла вставлять
     window.debounce(function () {
-      window.containerPicture.appendChild(window.initPhoto(renderNewPhotos(window.photoArr)));
+      var renderPhotosNew = renderNewPhotos(window.photoArr);
+      var initialPhoto = window.initPhoto(renderPhotosNew);
+      window.containerPicture.appendChild(initialPhoto);
     });
     filterNew.classList.add('img-filters__button--active');
     filterPopular.classList.remove('img-filters__button--active');
@@ -54,7 +57,9 @@
 
   filterDiscussed.addEventListener('click', function () {
     window.removeAllPhoto();
-    window.containerPicture.appendChild(window.initPhoto(renderCommitPhotos(window.photoArr)));
+    var renderPhotosCommit = renderCommitPhotos(window.photoArr);
+    var initialPhoto = window.initPhoto(renderPhotosCommit);
+    window.containerPicture.appendChild(initialPhoto);
     filterDiscussed.classList.add('img-filters__button--active');
     filterPopular.classList.remove('img-filters__button--active');
     filterNew.classList.remove('img-filters__button--active');
