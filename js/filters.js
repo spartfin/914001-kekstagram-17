@@ -13,8 +13,7 @@
   var renderNewPhotos = function (arr) {
     var copyArray = arr.slice();
     var sortedArray = copyArray.sort(window.utils.compareRandom);
-    var cutedArray = sortedArray.slice(0, PHOTOS_COUNT);
-    return cutedArray;
+    return sortedArray.slice(0, PHOTOS_COUNT);
   };
 
   // Обсуждаемые — фотографии, отсортированные в порядке убывания количества комментариев
@@ -29,8 +28,7 @@
 
   var renderCommitPhotos = function (arr) {
     var copyArray = arr.slice();
-    var sortedArray = copyArray.sort(sortComments);
-    return sortedArray;
+    return copyArray.sort(sortComments);
   };
 
   filterPopular.addEventListener('click', function () {

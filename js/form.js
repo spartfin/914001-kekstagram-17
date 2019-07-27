@@ -47,4 +47,5 @@
   uploadCancel.addEventListener('click', function () {
     closePopup();
   });
+
 })();
