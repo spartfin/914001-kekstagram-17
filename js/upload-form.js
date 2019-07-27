@@ -3,27 +3,9 @@
 (function () {
   var main = document.querySelector('main');
 
-  // Отправляет форму и проверяет ответ сервера
-  var upload = function (data, onSuccess) {
-    var xhr = new XMLHttpRequest();
-    var URL_POST = 'https://js.dump.academy/kekstagram';
-
-    xhr.responseType = 'json';
-
-    xhr.addEventListener('load', function () {
-      onSuccess(xhr.response);
-    });
-
-    xhr.addEventListener('error', function () {
-      onError();
-    });
-
-    xhr.open('POST', URL_POST);
-    xhr.send(data);
-  };
-
   // cбрасывает введённые ранее данные
   var resetUpload = function () {
+    window.imgUploadPreviewLoad.src = '';
     window.textHashtags.value = '';
     window.textDescription.value = '';
     window.uploadFile.value = '';
@@ -84,6 +66,7 @@
     openWindow('error');
     closeWindow('error');
   };
+  window.onError = onError;
 
   // Отправка формы нажатием на кнопку
   window.imgUploadForm.addEventListener('submit', function (evt) {
@@ -91,7 +74,7 @@
     var submitResult = window.submitValidate();
     if (!submitResult) {
       var newFormData = new FormData(window.imgUploadForm);
-      upload(newFormData, onSucces);
+      window.upload(newFormData, onSucces);
     }
   });
 

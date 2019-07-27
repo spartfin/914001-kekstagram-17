@@ -97,5 +97,11 @@
     }
   });
 
+  pictureCancel.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === window.ESC_KEYCODE) {
+      closeBigPicture();
+    }
+  });
+
 })();
 

@@ -4,6 +4,7 @@
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var uploadFile = document.querySelector('#upload-file');
   var imgUploadPreviewLoad = document.querySelector('.img-upload__preview img');
+  window.imgUploadPreviewLoad = imgUploadPreviewLoad;
   imgUploadPreviewLoad.style.height = '600px';
   imgUploadPreviewLoad.style.width = '600px';
 

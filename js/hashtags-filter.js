@@ -42,6 +42,9 @@
   // функция валидации при отправке хэштега
   var submitValidate = function () {
     var textHashtagsValue = textHashtags.value;
+    if (textHashtagsValue === '') {
+      return false;
+    }
     var errorMessage = hashtagsValidate(textHashtagsValue);
     if (errorMessage) {
       textHashtags.style.outline = '4px solid red'; // рамка в случаи ошибки
