@@ -14,8 +14,9 @@
   // показываем диалоговое окно
   var openWindow = function (dialogWindow) {
     var successWindow = document.querySelector('#' + dialogWindow).content.querySelector('.' + dialogWindow);
+    var message = successWindow.cloneNode(true);
 
-    main.appendChild(successWindow);
+    main.appendChild(message);
   };
 
   // удаляем диалоговое окно
